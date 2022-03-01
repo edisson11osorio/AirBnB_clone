@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
-    #email = ""
-    #password = ""
-    #firstname = ""
-    #last_name = ""
+from models.base_model import BaseModel
+
+
+email = ""
+password = ""
+firstname = ""
+last_name = ""
