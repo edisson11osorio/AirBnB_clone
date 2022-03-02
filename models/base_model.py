@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 """Module for the Base class"""
+##import models
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
+    ##def __init__(self, *args, **kwargs):
     """Class that defines all common attributes/methods for other classes"""
     def __init__(self):
         """Constructor of the class"""
