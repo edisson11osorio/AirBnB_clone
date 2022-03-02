@@ -52,6 +52,18 @@ class HBNBCommand(cmd.Cmd):
             except Exception:
                 print("** class doesn't exist **")
 
+    def do_all(self, line):
+        """Create a new instance of a Model"""
+        if line == "":
+            print("** class name missing **")
+        else:
+            try:
+                new_instance = globals()[line]()
+                """-----Save the new instance-----"""
+                print(new_instance.id)
+            except Exception:
+                print("** class doesn't exist **")
+
     def do_quit(self, line):
         """Quit command to exit the console"""
         return True
