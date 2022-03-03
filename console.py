@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Module for the HBNBCommand, set up and launch the console"""
 import cmd
-from models import storage
 from models.base_model import BaseModel
 
 
@@ -19,7 +18,6 @@ class HBNBCommand(cmd.Cmd):
                 """-----Save the new instance-----"""
                 print(new_instance.id)
                 print(new_instance.to_dict)
-                di_all = storage.new(new_instance)
             except Exception:
                 print("** class doesn't exist **")
 

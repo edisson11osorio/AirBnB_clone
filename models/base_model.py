@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Module for the Base class"""
-##import models
+import models
 from uuid import uuid4
 from datetime import datetime
 
@@ -13,6 +13,7 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        models.storage.new(self)
 
     def __str__(self):
         """Return the represents of the class objects as a string"""

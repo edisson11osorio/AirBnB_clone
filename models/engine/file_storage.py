@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-
+"""Module Class FileStorage"""
 import json
 from models.base_model import BaseModel
 
 
 class FileStorage:
-
+    """Class to save and load the data in a JSON file"""
     __file_path = "file.json"
     __objects = {}
 
@@ -15,6 +15,7 @@ class FileStorage:
       
     def new(self, obj):
         """  sets in objects the obj with key"""
+        print("Here")
         key = obj.to_dict().__class__ + "." + obj.__str__.id
         print("In new: {}".format(key))
 
