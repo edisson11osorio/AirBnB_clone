@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module that define unittests to models/base_model.py"""
 from datetime import datetime
 from time import sleep
 import unittest
@@ -26,17 +27,20 @@ class TestBaseModel(unittest.TestCase):
     def test_create_at(self):
         """Test the create_at attribute"""
         inst = BaseModel()
-        self.assertTrue(hasattr(inst, "create_at"))
+        self.assertTrue(hasattr(inst, "created_at"))
         self.assertIsInstance(inst.created_at, datetime)
-        self.assertEqual(inst.created_at, datetime.now())
+        self.assertNotEqual(inst.created_at, datetime.now())
 
     def test_updated_at(self):
         """Test the updated_at attribute"""
         inst = BaseModel()
         self.assertTrue(hasattr(inst, "updated_at"))
         self.assertIsInstance(inst.updated_at, datetime)
+        before_time_created = inst.created_at
+        before_time_updated = inst.updated_at
         inst.save()
-        self.assertEqual(inst.updated_at, datetime.now())
+        self.assertNotEqual(before_time_updated, inst.updated_at)
+        self.assertEqual(before_time_created, inst.created_at)
 
     def test_strclasname(self):
         """Test class name"""
@@ -51,9 +55,17 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(result, str(inst))
 
     def test_to_dict(self):
-        """Test the dictionary method"""
+        """Test the values of dictionary method"""
+        format_time = "%Y-%m-%dT%H:%M:%S.%f"
         inst = BaseModel()
-        self.assertIsInstance(inst.to_dict(), dict)
+        dict_inst = inst.to_dict()
+        self.assertTrue(dict, type(dict_inst))
+        self.assertIn("id", dict_inst)
+        self.assertIn("created_at", dict_inst)
+        self.assertIn("updated_at", dict_inst)
+        self.assertIn("__class__", dict_inst)
+        self.assertEqual(str, type(dict_inst["created_at"]))
+        self.assertEqual(str, type(dict_inst["updated_at"]))
 
     def test_save(self):
         """Test to save method"""
@@ -65,8 +77,6 @@ class TestBaseModel(unittest.TestCase):
         after_time = inst.updated_at
         self.assertTrue(inst.id == 784)
         self.assertNotEqual(before_time, after_time)
-        with open("file.json", "r", encoding="utf-8") as f:
-            self.assertTrue("\"id\": 784" in f.read())
 
 
 if __name__ == "__main__":
