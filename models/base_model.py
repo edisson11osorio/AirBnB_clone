@@ -33,8 +33,8 @@ class BaseModel:
     def to_dict(self):
         """Returns a dictionary containing all keys/values of
             __dict__ of the instance"""
-        serialized = dict(self.__dict__).copy()
+        serialized = dict(self.__dict__)
         serialized["__class__"] = type(self).__name__
         serialized["created_at"] = serialized["created_at"].isoformat()
         serialized["updated_at"] = serialized["updated_at"].isoformat()
-        return
+        return serialized
