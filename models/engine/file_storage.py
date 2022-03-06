@@ -2,12 +2,6 @@
 """Module Class FileStorage"""
 import json
 from models.base_model import BaseModel
-from models.user import User
-#from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 
 
 class FileStorage:
@@ -17,18 +11,17 @@ class FileStorage:
 
     def all(self):
         """ Return the dicticionary objects """
-        return self.__objects
+        return FileStorage.__objects
       
     def new(self, obj):
         """  sets in objects the obj with key"""
-        print("Here")
-        key = obj.to_dict().__class__ + "." + obj.__str__.id
-        print("In new: {}".format(key))
+        key = str(type(obj).__name__) + "." + str(obj.id)
+        """self.__objects[key]"""
 
     def save(self):
         """Serializes the objects list to the JSON file"""
         string_to_save = json.dumps(self.__objects.__dict__)
-        with open(self.__file_path, 'w', encoding="utf-8") as my_file:
+        with open(self.__file_path, mode="w", encoding="utf-8") as my_file:
             my_file.write(json.dumps(string_to_save))
 
     def reload(self):
@@ -36,6 +29,5 @@ class FileStorage:
         try:
             with open(self.__file_path, encoding="utf-8") as my_file:
                 self.__objects = json.loads(my_file.read())
-                
-        except FileNotFoundError:
+        except Exception:
             pass
