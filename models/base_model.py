@@ -9,14 +9,14 @@ class BaseModel:
     """Class that defines all common attributes/methods for other classes"""
     def __init__(self, *args, **kwargs):
         """Constructor of the class"""
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
         if kwargs:
             self.id = kwargs.get("id")
             self.created_at = datetime.fromisoformat(kwargs.get("created_at"))
             self.updated_at = datetime.fromisoformat(kwargs.get("updated_at"))
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class BaseModel:
     def to_dict(self):
         """Returns a dictionary containing all keys/values of
             __dict__ of the instance"""
-        serialized = dict(self.__dict__)
+        serialized = dict(self.__dict__).copy()
         serialized["__class__"] = type(self).__name__
         serialized["created_at"] = serialized["created_at"].isoformat()
         serialized["updated_at"] = serialized["updated_at"].isoformat()
