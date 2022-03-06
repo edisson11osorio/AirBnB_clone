@@ -11,23 +11,28 @@ class FileStorage:
 
     def all(self):
         """ Return the dicticionary objects """
-        return FileStorage.__objects
-      
+        return self.__objects
+
     def new(self, obj):
         """  sets in objects the obj with key"""
         key = str(type(obj).__name__) + "." + str(obj.id)
-        """self.__objects[key]"""
+        self.__objects[key] = obj
 
     def save(self):
         """Serializes the objects list to the JSON file"""
-        string_to_save = json.dumps(self.__objects.__dict__)
-        with open(self.__file_path, mode="w", encoding="utf-8") as my_file:
-            my_file.write(json.dumps(string_to_save))
+        json_obj = {}        
+        for key in self.__objects:            
+            json_obj[key] = self.__objects[key].to_dict()        
+        with open(self.__file_path, 'w', encoding='UTF-8') as file:            
+            json.dump(json_obj, file)
 
     def reload(self):
         """Deserializes the JSON file to objects"""
         try:
             with open(self.__file_path, encoding="utf-8") as my_file:
-                self.__objects = json.loads(my_file.read())
+                dict_file = json.load(my_file)
+                for value in dict_file.values():
+                    new_object = globals()[value["__class__"]](**value)
+                    self.new(new_object)
         except Exception:
             pass
