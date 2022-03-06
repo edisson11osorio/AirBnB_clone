@@ -31,3 +31,4 @@ class BaseModel:
         serialized["__class__"] = type(self).__name__
         serialized["created_at"] = serialized["created_at"].isoformat()
         serialized["updated_at"] = serialized["updated_at"].isoformat()
+        return
