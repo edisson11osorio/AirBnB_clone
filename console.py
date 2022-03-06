@@ -16,8 +16,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 new_instance = globals()[line]()
                 """-----Save the new instance-----"""
-                print(new_instance.id)
-                print(new_instance.to_dict)
+                print("Id new: {}".format(new_instance.id))
             except Exception:
                 print("** class doesn't exist **")
 
