@@ -15,7 +15,7 @@ class TestStateModel(unittest.TestCase):
         self.assertIsInstance(inst_state, BaseModel)
 
     def test_attributes(self):
-        "Test to verify if has atrributes of User"
+        "Test to verify if has atrributes"
         inst_state = State()
         self.assertTrue(hasattr(inst_state, "id"))
         self.assertTrue(hasattr(inst_state, "created_at"))
