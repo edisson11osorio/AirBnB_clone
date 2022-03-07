@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module for the HBNBCommand, set up and launch the console"""
 import cmd
+from models import storage
 from models.base_model import BaseModel
 
 
@@ -15,24 +16,29 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 new_instance = globals()[line]()
-                """-----Save the new instance-----"""
-                print("Id new: {}".format(new_instance.id))
+                new_instance.save()
+                print(new_instance.id)
             except Exception:
                 print("** class doesn't exist **")
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of an instance based
+            on the class name and id"""
         tokens = line.split()
         if len(tokens) == 0:
             print("** class name missing **")
         else:
             try:
-                instance_to_show = globals()[tokens[0]]()
+                globals()[tokens[0]]
                 if len(tokens) != 2:
                     print("** instance id missing **")
                 else:
-                    """-----Search in the storage-----"""
-                    print(instance_to_show)
+                    all_data = storage.all()
+                    key = tokens[0] + "." + tokens[1]
+                    if key in all_data:
+                        print(all_data[key])
+                    else:
+                        print("** no instance found **")
             except Exception:
                 print("** class doesn't exist **")
 
@@ -43,26 +49,43 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             try:
-                instance_to_destroy = globals()[tokens[0]]()
+                globals()[tokens[0]]
                 if len(tokens) != 2:
                     print("** instance id missing **")
                 else:
-                    """-----Search in the storage-----"""
-                    print(instance_to_destroy)
+                    all_data = storage.all()
+                    key = tokens[0] + "." + tokens[1]
+                    if key in all_data:
+                        del all_data[key]
+                        storage.save()
+                    else:
+                        print("** no instance found **")
             except Exception:
                 print("** class doesn't exist **")
 
     def do_all(self, line):
-        """Create a new instance of a Model"""
-        if line == "":
-            print("** class name missing **")
-        else:
+        """Prints all string representation of all instances
+            based or not on the class name"""
+        len_line = len(line)
+        tokens = line.split()
+        if len_line > 0:
             try:
-                new_instance = globals()[line]()
-                """-----Save the new instance-----"""
-                print(new_instance.id)
+                globals()[tokens[0]]
             except Exception:
                 print("** class doesn't exist **")
+        else:
+            data_list = []
+            all_data = storage.all()
+            for data in all_data.values():
+                if tokens[0] == data.__class__.__name__ and len_line > 0:
+                    data_list.append(data.__str__())
+                elif len_line == 0:
+                    data_list.append(data.__str__())
+            print(data_list)
+
+    def do_update(self, line):
+        """Updates an instance based on the class name and id"""
+        pass
 
     def do_quit(self, line):
         """Quit command to exit the console"""
@@ -74,7 +97,8 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """Disable the repetition of the last command when an empty line is entered"""
+        """Disable the repetition of the last command when
+            an empty line is entered"""
         pass
 
 
