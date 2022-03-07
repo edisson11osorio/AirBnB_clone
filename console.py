@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module for the HBNBCommand, set up and launch the console"""
 import cmd
+from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
 
@@ -85,7 +86,42 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        pass
+        tokens = line.split()
+        if len(tokens) == 0:
+            print("** class name missing **")
+        else:
+            try:
+                globals()[tokens[0]]
+            except Exception:
+                print("** class doesn't exist **")
+                return
+            if len(tokens) < 2:
+                print("** instance id missing **")
+                return
+            else:
+                all_data = storage.all()
+                key = tokens[0] + "." + tokens[1]
+                if key in all_data:
+                    value_key = all_data.get(key)
+                    if len(tokens) < 3:
+                        print("** attribute name missing **")
+                        return
+                    else:
+                        if len(tokens) < 4:
+                            print("** value missing **")
+                            return
+                        else:
+                            value = tokens[3]
+                            try:
+                                value = int(tokens[3])
+                            except Exception:
+                                pass
+                            setattr(value_key, tokens[2], value)
+                            setattr(value_key, "updated_at", datetime.now())
+                            all_data[key] = value_key
+                            storage.save()
+                else:
+                    print("** no instance found **")
 
     def do_quit(self, line):
         """Quit command to exit the console"""
