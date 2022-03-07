@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
             data_list = []
             all_data = storage.all()
             for data in all_data.values():
-                if tokens[0] == data.__class__.__name__ and len_line > 0:
+                if (tokens[0] == data.__class__.__name__) and (len_line == 1):
                     data_list.append(data.__str__())
                 elif len_line == 0:
                     data_list.append(data.__str__())
