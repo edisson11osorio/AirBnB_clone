@@ -72,17 +72,20 @@ class HBNBCommand(cmd.Cmd):
         if len_line > 0:
             try:
                 globals()[tokens[0]]
+                data_list = []
+                all_data = storage.all()
+                for data in all_data.values():
+                    if tokens[0] == data.__class__.__name__:
+                        data_list.append(data.__str__())
             except Exception:
                 print("** class doesn't exist **")
+                return
         else:
             data_list = []
             all_data = storage.all()
             for data in all_data.values():
-                if (tokens[0] == data.__class__.__name__) and (len_line == 1):
-                    data_list.append(data.__str__())
-                elif len_line == 0:
-                    data_list.append(data.__str__())
-            print(data_list)
+                data_list.append(data.__str__())
+        print(data_list)
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
