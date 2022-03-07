@@ -1,21 +1,10 @@
 #!/usr/bin/python3
 """Module that define unittests to models/base_model.py"""
 import json
-import pep8
 from os import path
 import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-
-
-class Test_pep8(unittest.TestCase):
-    """pep8 test cases class"""
-    def test_pep8_conformance(self):
-        """Test that we conform to PEP8."""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
 
 
 class TestFileStorage(unittest.TestCase):
