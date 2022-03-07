@@ -76,5 +76,16 @@ class TestFileStorage(unittest.TestCase):
             save_text = file.read()
             self.assertIn("BaseModel." + new_base.id, save_text)
 
+    def test_new(self):
+        """Test new method"""
+        storage = FileStorage()
+        new_base = BaseModel(id="567", created_at="2021-02-17T22:46:38.883036",
+                             updated_at="2021-02-17T22:46:38.883036")
+        storage.new(new_base)
+        objs = storage.all()
+        key = new_base.__class__.__name__ + "." + new_base.__dict__["id"]
+        self.assertIn(key, objs)
+
+
 if __name__ == "__main__":
     unittest.main()
