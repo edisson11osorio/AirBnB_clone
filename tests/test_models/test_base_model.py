@@ -56,7 +56,6 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict(self):
         """Test the values of dictionary method"""
-        format_time = "%Y-%m-%dT%H:%M:%S.%f"
         inst = BaseModel()
         dict_inst = inst.to_dict()
         self.assertTrue(dict, type(dict_inst))
@@ -70,13 +69,11 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test to save method"""
         inst = BaseModel()
-        before_time = inst.updated_at
-        sleep(10)
-        inst.id = 784
+        sleep(0.5)
+        date_now = datetime.now()
         inst.save()
-        after_time = inst.updated_at
-        self.assertTrue(inst.id == 784)
-        self.assertNotEqual(before_time, after_time)
+        diference = inst.updated_at - date_now
+        self.assertTrue(abs(diference.total_seconds()) < 0.01)
 
 
 if __name__ == "__main__":
