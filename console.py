@@ -145,7 +145,8 @@ class HBNBCommand(cmd.Cmd):
         switcher = {
             "all": self.do_all,
             "count": self.do_count,
-            "show": self.do_show
+            "show": self.do_show,
+            "destroy": self.do_destroy
         }
 
         tokens = line.split(".")
@@ -154,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
 
         if command_do in switcher.keys():
             method_call = switcher.get(command_do)
-            if command_do == "show":
+            if command_do == "show" or command_do == "destroy":
                 id = tokens[1].split("(\"")[1]
                 return method_call(name_model + " " + id.split("\")")[0])
             return method_call(name_model)
