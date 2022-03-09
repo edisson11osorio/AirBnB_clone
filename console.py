@@ -144,7 +144,8 @@ class HBNBCommand(cmd.Cmd):
         """Check if an input is valid an call the associated method"""
         switcher = {
             "all": self.do_all,
-            "count": self.do_count
+            "count": self.do_count,
+            "show": self.do_show
         }
 
         tokens = line.split(".")
@@ -152,6 +153,9 @@ class HBNBCommand(cmd.Cmd):
         command_do = tokens[1].split("(")[0]
 
         if command_do in switcher.keys():
+            if command_do == "show":
+                return method_call(name_model + " " +
+                                   command_do[0].split(")")[0])
             method_call = switcher.get(command_do)
             return method_call(name_model)
         return
