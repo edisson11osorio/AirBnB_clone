@@ -155,8 +155,8 @@ class HBNBCommand(cmd.Cmd):
         if command_do in switcher.keys():
             method_call = switcher.get(command_do)
             if command_do == "show":
-                return method_call(name_model + " " +
-                                   command_do[1].split(")")[0])
+                id = tokens[1].split("(\"")[1]
+                return method_call(name_model + " " + id.split("\")")[0])
             return method_call(name_model)
         return
 
