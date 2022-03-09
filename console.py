@@ -132,12 +132,21 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
 
+    def do_count(self, line):
+        """Retrieve the number of instances of a class"""
+        number_instances = 0
+        for inst in storage.all().values():
+            if inst.__class__.__name__ == line:
+                number_instances += 1
+        print(number_instances)
+
     def default(self, line):
         """Check if an input is valid an call the associated method"""
         switcher = {
-            "all": self.do_all
+            "all": self.do_all,
+            "count": self.do_count
         }
-        
+
         tokens = line.split(".")
         name_model = tokens[0]
         command_do = tokens[1].split("(")[0]
