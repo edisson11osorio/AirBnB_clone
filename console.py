@@ -132,6 +132,21 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
 
+    def default(self, line):
+        """Check if an input is valid an call the associated method"""
+        switcher = {
+            "all": self.do_all
+        }
+        
+        tokens = line.split(".")
+        name_model = tokens[0]
+        command_do = tokens[1].split("(")[0]
+
+        if command_do in switcher.keys():
+            method_call = switcher.get(command_do)
+            return method_call(name_model)
+        return
+
     def do_quit(self, line):
         """Quit command to exit the console"""
         return True
