@@ -4,6 +4,12 @@ import cmd
 from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -125,6 +131,35 @@ class HBNBCommand(cmd.Cmd):
                             storage.save()
                 else:
                     print("** no instance found **")
+
+    def do_count(self, line):
+        """Retrieve the number of instances of a class"""
+        number_instances = 0
+        for inst in storage.all().values():
+            if inst.__class__.__name__ == line:
+                number_instances += 1
+        print(number_instances)
+
+    def default(self, line):
+        """Check if an input is valid an call the associated method"""
+        switcher = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy
+        }
+
+        tokens = line.split(".")
+        name_model = tokens[0]
+        command_do = tokens[1].split("(")[0]
+
+        if command_do in switcher.keys():
+            method_call = switcher.get(command_do)
+            if command_do == "show" or command_do == "destroy":
+                id = tokens[1].split("(\"")[1]
+                return method_call(name_model + " " + id.split("\")")[0])
+            return method_call(name_model)
+        return
 
     def do_quit(self, line):
         """Quit command to exit the console"""
