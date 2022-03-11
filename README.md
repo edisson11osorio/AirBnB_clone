@@ -78,6 +78,8 @@ $
 All tests should also pass in non-interactive mode: ``` $ echo "python3 -m unittest discover tests" | bash ```
 
 
+<img src="https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220311%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220311T034627Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=411dff0e9c849cddc681917368dcb6e83db1a7cbf7f45d6eb019e1a7feff8c54"/>
+
 ## Authors:
 
 Migdalis Lepage  - <img alt="GitHub" width="26px" src="https://avatars.githubusercontent.com/u/26048544?v=4" /> [Github](https://github.com/Migdalis) 
