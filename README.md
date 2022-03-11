@@ -78,7 +78,7 @@ $
 All tests should also pass in non-interactive mode: ``` $ echo "python3 -m unittest discover tests" | bash ```
 
 
-<img src="https://s3.amazonaws.com/intranet-projects-files/concepts/74/hbnb_step1.png4"/>
+<img src="https://s3.amazonaws.com/intranet-projects-files/concepts/74/hbnb_step1.png"/>
 
 ## Authors:
 
